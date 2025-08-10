@@ -2,6 +2,7 @@ package logic
 
 import (
 	"context"
+	"errors"
 
 	"user/rpc/internal/svc"
 	"user/rpc/user"
@@ -24,7 +25,12 @@ func NewGetUserLogic(ctx context.Context, svcCtx *svc.ServiceContext) *GetUserLo
 }
 
 func (l *GetUserLogic) GetUser(in *user.GetUserReq) (*user.GetUserResp, error) {
-	// todo: add your logic here and delete this line
-
-	return &user.GetUserResp{}, nil
+	if u, ok := users[in.Id]; ok {
+		return &user.GetUserResp{
+			Id:    u.Id,
+			Name:  u.Name,
+			Phone: u.Phone,
+		}, nil
+	}
+	return nil, errors.New("查询用户不存在")
 }
