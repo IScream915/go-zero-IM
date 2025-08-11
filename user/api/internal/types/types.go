@@ -4,11 +4,11 @@
 package types
 
 type UserReq struct {
-	Id string `json:"id"`
+	Id uint64 `json:"id"`
 }
 
 type UserResp struct {
-	Id    string `json:"id"`
+	Id    uint64 `json:"id"`
 	Name  string `json:"name"`
 	Phone string `json:"phone"`
 }
