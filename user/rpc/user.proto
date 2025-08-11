@@ -6,18 +6,27 @@ option go_package = "./user";
 
 service User {
   rpc GetUser(GetUserReq) returns (GetUserResp);
+  rpc CreateUser(CreateUserReq) returns (CreateUserResp);
   rpc Ping(Request) returns (Response);
 }
 
 message Request {}
 message  Response {}
 
-message GetUserReq {
-  string id = 1;
+message CreateUserReq {
+  string name = 1;
+  string phone = 2;
+  string password = 3;
+}
+message CreateUserResp {
+  uint64 id = 1;
 }
 
+message GetUserReq {
+  uint64 id = 1;
+}
 message GetUserResp {
-  string id = 1;
+  uint64 id = 1;
   string name = 2;
   string phone = 3;
 }
