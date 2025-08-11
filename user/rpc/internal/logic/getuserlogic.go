@@ -3,7 +3,8 @@ package logic
 import (
 	"context"
 	"errors"
-	"fmt"
+	"user/dao/model"
+	"user/dao/query/implement"
 	"user/rpc/internal/svc"
 	"user/rpc/user"
 
@@ -25,18 +26,19 @@ func NewGetUserLogic(ctx context.Context, svcCtx *svc.ServiceContext) *GetUserLo
 }
 
 func (l *GetUserLogic) GetUser(in *user.GetUserReq) (*user.GetUserResp, error) {
-	// 添加调试日志
-	l.Infof("GetUser called with ID: %d", in.Id)
-	l.Infof("Request object: %+v", in)
+	dbTool := implement.NewDbToolHelper[model.User](l.svcCtx.DB)
+	record, err := dbTool.SearchSingleByField(l.ctx, "id", in.Id)
+	if err != nil {
+		return nil, err
+	}
 
-	if u, ok := users[fmt.Sprintf("%d", in.Id)]; ok {
-		l.Infof("Found user: %+v", u)
+	if record == nil {
+		return nil, errors.New("查询用户不存在")
+	} else {
 		return &user.GetUserResp{
-			Id:    u.Id,
-			Name:  u.Name,
-			Phone: u.Phone,
+			Id:    record.ID,
+			Name:  record.Name,
+			Phone: record.Phone,
 		}, nil
 	}
-	l.Infof("User with ID %d not found", in.Id)
-	return nil, errors.New("查询用户不存在")
 }
