@@ -3,7 +3,7 @@ package logic
 import (
 	"context"
 	"errors"
-	"user/dao/model"
+	"user/dao/models"
 	"user/dao/query/implement"
 	"user/rpc/internal/svc"
 	"user/rpc/user"
@@ -26,7 +26,7 @@ func NewGetUserLogic(ctx context.Context, svcCtx *svc.ServiceContext) *GetUserLo
 }
 
 func (l *GetUserLogic) GetUser(in *user.GetUserReq) (*user.GetUserResp, error) {
-	dbTool := implement.NewDbToolHelper[model.User](l.svcCtx.DB)
+	dbTool := implement.NewDbToolHelper[models.User](l.svcCtx.DB)
 	record, err := dbTool.SearchSingleByField(l.ctx, "id", in.Id)
 	if err != nil {
 		return nil, err

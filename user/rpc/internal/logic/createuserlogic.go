@@ -2,7 +2,7 @@ package logic
 
 import (
 	"context"
-	"user/dao/model"
+	"user/dao/models"
 	"user/dao/query/implement"
 
 	"user/rpc/internal/svc"
@@ -27,13 +27,13 @@ func NewCreateUserLogic(ctx context.Context, svcCtx *svc.ServiceContext) *Create
 }
 
 func (l *CreateUserLogic) CreateUser(in *user.CreateUserReq) (*user.CreateUserResp, error) {
-	newUser := &model.User{
+	newUser := &models.User{
 		Name:     in.Name,
 		Phone:    in.Phone,
 		Password: in.Password,
 	}
 	if txErr := l.svcCtx.DB.Transaction(func(tx *gorm.DB) error {
-		dbTool := implement.NewDbToolHelper[model.User](tx)
+		dbTool := implement.NewDbToolHelper[models.User](tx)
 		err := dbTool.InsertSingleRecord(l.ctx, newUser)
 		if err != nil {
 			return err

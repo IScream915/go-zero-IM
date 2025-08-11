@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"log"
 
-	"user/dao/model"
+	"user/dao/models"
 	"user/rpc/internal/config"
 	"user/rpc/internal/server"
 	"user/rpc/internal/svc"
@@ -28,7 +28,7 @@ func main() {
 	ctx := svc.NewServiceContext(c)
 
 	// 执行数据库迁移
-	if err := ctx.DB.AutoMigrate(&model.User{}); err != nil {
+	if err := ctx.DB.AutoMigrate(&models.User{}); err != nil {
 		log.Fatalf("Failed to migrate database: %v", err)
 	}
 	fmt.Println("Database migration completed successfully")
