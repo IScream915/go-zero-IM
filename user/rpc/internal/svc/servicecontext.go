@@ -9,6 +9,9 @@ import (
 	"gorm.io/gorm"
 )
 
+// DSN 数据库连接地址
+var DSN string
+
 type ServiceContext struct {
 	Config config.Config
 	DB     *gorm.DB
@@ -32,6 +35,8 @@ func initDatabase(cfg config.DatabaseConfig) *gorm.DB {
 		cfg.DatabaseName,
 		cfg.Charset,
 	)
+
+	DSN = dsn
 
 	db, err := gorm.Open(mysql.Open(dsn), &gorm.Config{})
 	if err != nil {
