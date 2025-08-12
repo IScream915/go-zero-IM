@@ -2,11 +2,18 @@ package logic
 
 import (
 	"context"
+	"errors"
+	"user/dao/models"
+	"user/dao/query/implement"
 
 	"user/rpc/internal/svc"
 	"user/rpc/user"
 
 	"github.com/zeromicro/go-zero/core/logx"
+)
+
+var (
+	ErrUserNotFound = errors.New("无法查询到该用户")
 )
 
 type GetUserInfoLogic struct {
@@ -24,7 +31,25 @@ func NewGetUserInfoLogic(ctx context.Context, svcCtx *svc.ServiceContext) *GetUs
 }
 
 func (l *GetUserInfoLogic) GetUserInfo(in *user.GetUserInfoReq) (*user.GetUserInfoResp, error) {
-	// todo: add your logic here and delete this line
+	// 根据id进行查找
+	dbTool := implement.NewDbToolHelper[models.User](l.svcCtx.DB)
+	record, err := dbTool.SearchSingleByField(l.ctx, "id", in.Id)
+	if err != nil {
+		return nil, errors.New("查询时出现错误")
+	}
 
-	return &user.GetUserInfoResp{}, nil
+	if record == nil {
+		// 查找不到该用户
+		return nil, ErrUserNotFound
+	}
+
+	return &user.GetUserInfoResp{
+		User: &user.UserEntity{
+			Id:       record.ID,
+			Nickname: record.Nickname,
+			Phone:    record.Phone,
+			Status:   int32(record.Status),
+			Sex:      int32(record.Sex),
+		},
+	}, nil
 }
