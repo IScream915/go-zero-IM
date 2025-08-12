@@ -39,7 +39,7 @@ func (l *FindUserLogic) FindUser(in *user.FindUserReq) (*user.FindUserResp, erro
 		condition = append(condition, fmt.Sprintf("u.`phone` = '%s'", in.Phone))
 	}
 	if in.Nickname != "" {
-		condition = append(condition, fmt.Sprintf("u.`nickname` = '%s'", in.Nickname))
+		condition = append(condition, fmt.Sprintf("u.`nickname` LIKE '%%%s%%'", in.Nickname))
 	}
 	if len(in.Ids) > 0 {
 		ids := make([]string, len(in.Ids))
