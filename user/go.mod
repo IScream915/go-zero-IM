@@ -6,6 +6,7 @@ require (
 	github.com/edwingeng/wuid v1.0.0
 	github.com/golang-jwt/jwt/v4 v4.5.2
 	github.com/zeromicro/go-zero v1.8.5
+	github.com/zeromicro/x v0.0.0-20240408115609-8224c482b07e
 	golang.org/x/crypto v0.38.0
 	google.golang.org/grpc v1.74.2
 	google.golang.org/protobuf v1.36.7
