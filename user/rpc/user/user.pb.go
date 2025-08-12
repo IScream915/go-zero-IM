@@ -499,7 +499,7 @@ func (x *GetUserInfoResp) GetUser() *UserEntity {
 
 type FindUserReq struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Name          string                 `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
+	Nickname      string                 `protobuf:"bytes,1,opt,name=nickname,proto3" json:"nickname,omitempty"`
 	Phone         string                 `protobuf:"bytes,2,opt,name=phone,proto3" json:"phone,omitempty"`
 	Ids           []string               `protobuf:"bytes,3,rep,name=ids,proto3" json:"ids,omitempty"`
 	unknownFields protoimpl.UnknownFields
@@ -536,9 +536,9 @@ func (*FindUserReq) Descriptor() ([]byte, []int) {
 	return file_user_proto_rawDescGZIP(), []int{9}
 }
 
-func (x *FindUserReq) GetName() string {
+func (x *FindUserReq) GetNickname() string {
 	if x != nil {
-		return x.Name
+		return x.Nickname
 	}
 	return ""
 }
@@ -635,9 +635,9 @@ const file_user_proto_rawDesc = "" +
 	"\x0eGetUserInfoReq\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\"7\n" +
 	"\x0fGetUserInfoResp\x12$\n" +
-	"\x04user\x18\x01 \x01(\v2\x10.user.UserEntityR\x04user\"I\n" +
-	"\vFindUserReq\x12\x12\n" +
-	"\x04name\x18\x01 \x01(\tR\x04name\x12\x14\n" +
+	"\x04user\x18\x01 \x01(\v2\x10.user.UserEntityR\x04user\"Q\n" +
+	"\vFindUserReq\x12\x1a\n" +
+	"\bnickname\x18\x01 \x01(\tR\bnickname\x12\x14\n" +
 	"\x05phone\x18\x02 \x01(\tR\x05phone\x12\x10\n" +
 	"\x03ids\x18\x03 \x03(\tR\x03ids\"4\n" +
 	"\fFindUserResp\x12$\n" +
