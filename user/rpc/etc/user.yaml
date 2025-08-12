@@ -13,3 +13,7 @@ Database:
   Password: "Admin@9000"
   DatabaseName: go_zero_IM
   Charset: utf8mb4
+
+Jwt:
+  AccessSecret: imooc.com
+  AccessExpire: 8640000
