@@ -24,11 +24,9 @@ const (
 // model
 type Friends struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Id            int32                  `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty"`
-	UserId        string                 `protobuf:"bytes,2,opt,name=userId,proto3" json:"userId,omitempty"`
-	Remark        string                 `protobuf:"bytes,3,opt,name=remark,proto3" json:"remark,omitempty"`
-	AddSource     int32                  `protobuf:"varint,4,opt,name=addSource,proto3" json:"addSource,omitempty"` // 添加来源
-	FriendUid     string                 `protobuf:"bytes,5,opt,name=friendUid,proto3" json:"friendUid,omitempty"`
+	Id            string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+	Remark        string                 `protobuf:"bytes,2,opt,name=remark,proto3" json:"remark,omitempty"`
+	AddSource     int32                  `protobuf:"varint,3,opt,name=addSource,proto3" json:"addSource,omitempty"` // 添加来源
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -63,16 +61,9 @@ func (*Friends) Descriptor() ([]byte, []int) {
 	return file_social_proto_rawDescGZIP(), []int{0}
 }
 
-func (x *Friends) GetId() int32 {
+func (x *Friends) GetId() string {
 	if x != nil {
 		return x.Id
-	}
-	return 0
-}
-
-func (x *Friends) GetUserId() string {
-	if x != nil {
-		return x.UserId
 	}
 	return ""
 }
@@ -89,13 +80,6 @@ func (x *Friends) GetAddSource() int32 {
 		return x.AddSource
 	}
 	return 0
-}
-
-func (x *Friends) GetFriendUid() string {
-	if x != nil {
-		return x.FriendUid
-	}
-	return ""
 }
 
 type FriendRequests struct {
@@ -1503,13 +1487,11 @@ var File_social_proto protoreflect.FileDescriptor
 
 const file_social_proto_rawDesc = "" +
 	"\n" +
-	"\fsocial.proto\x12\x06social\"\x85\x01\n" +
+	"\fsocial.proto\x12\x06social\"O\n" +
 	"\aFriends\x12\x0e\n" +
-	"\x02id\x18\x01 \x01(\x05R\x02id\x12\x16\n" +
-	"\x06userId\x18\x02 \x01(\tR\x06userId\x12\x16\n" +
-	"\x06remark\x18\x03 \x01(\tR\x06remark\x12\x1c\n" +
-	"\taddSource\x18\x04 \x01(\x05R\taddSource\x12\x1c\n" +
-	"\tfriendUid\x18\x05 \x01(\tR\tfriendUid\"\xa6\x01\n" +
+	"\x02id\x18\x01 \x01(\tR\x02id\x12\x16\n" +
+	"\x06remark\x18\x02 \x01(\tR\x06remark\x12\x1c\n" +
+	"\taddSource\x18\x03 \x01(\x05R\taddSource\"\xa6\x01\n" +
 	"\x0eFriendRequests\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\x05R\x02id\x12\x16\n" +
 	"\x06userId\x18\x02 \x01(\tR\x06userId\x12\x16\n" +
