@@ -2,6 +2,7 @@ package user
 
 import (
 	"context"
+	"user/rpc/user"
 
 	"user/api/internal/svc"
 	"user/api/internal/types"
@@ -25,7 +26,18 @@ func NewLoginLogic(ctx context.Context, svcCtx *svc.ServiceContext) *LoginLogic 
 }
 
 func (l *LoginLogic) Login(req *types.LoginReq) (resp *types.LoginResp, err error) {
-	// todo: add your logic here and delete this line
+	// 将入参传递到下游函数
+	loginResp, err := l.svcCtx.User.Login(l.ctx, &user.LoginReq{
+		Phone:    req.Phone,
+		Password: req.Password,
+	})
+	if err != nil {
+		return nil, err
+	}
 
+	resp = &types.LoginResp{
+		Token:  loginResp.Token,
+		Expire: loginResp.Expire,
+	}
 	return
 }
