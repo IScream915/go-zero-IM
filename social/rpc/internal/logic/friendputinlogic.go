@@ -35,17 +35,22 @@ func (l *FriendPutInLogic) FriendPutIn(in *social.FriendPutInReq) (*social.Frien
 	friendsTable := models.Friends{}.TableName()
 	record := &models.Friends{}
 
+	var count int64
 	err := l.svcCtx.DB.
 		WithContext(l.ctx).
 		Table(fmt.Sprintf("%s AS f", friendsTable)).
 		Where(fmt.Sprintf("f.`user_id` = '%s' AND f.`friend_uid` = '%s'", in.UserId, in.ReqUid)).
-		First(record).Error
-
+		First(record).
+		Count(&count).Error
 	if err != nil {
 		if !errors.Is(err, gorm.ErrRecordNotFound) {
-			// 当前与目标已经是好友，无需再添加好友
-			return nil, errors.New("无法向已添加的好友发送好友申请")
+			// 在查询的时候出现了结果为空之外的问题
+			return nil, errors.New("查询" + friendsTable + "时出现了问题")
 		}
+	}
+	if count > 0 {
+		// 当前与目标已经是好友，无需再添加好友
+		return nil, errors.New("无法向已添加过的好友发送好友申请")
 	}
 
 	// 是否已经有过未通过的申请记录
@@ -66,8 +71,8 @@ func (l *FriendPutInLogic) FriendPutIn(in *social.FriendPutInReq) (*social.Frien
 		}
 	} else {
 		// 如果查询结果不为空并且处理结果为通过的时候返回错误
-		if result.HandleResult == models.ResultApprove {
-			return nil, errors.New("无法向已添加的好友发送好友申请")
+		if result.HandleResult == models.ResultUnhandled {
+			return nil, errors.New("您已发送过好友申请, 请稍作等待")
 		}
 	}
 
