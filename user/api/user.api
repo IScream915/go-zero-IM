@@ -34,6 +34,6 @@ service user {
 service user {
 	@doc "获取用户信息"
 	@handler detail
-	get /user (UserInfoReq) returns (UserInfoResp)
+	get /detail (UserInfoReq) returns (UserInfoResp)
 }
 

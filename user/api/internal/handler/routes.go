@@ -36,7 +36,7 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 			{
 				// 获取用户信息
 				Method:  http.MethodGet,
-				Path:    "/user",
+				Path:    "/detail",
 				Handler: user.DetailHandler(serverCtx),
 			},
 		},

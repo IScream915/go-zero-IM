@@ -17,7 +17,7 @@ type RegisterReq struct {
 	Phone    string `json:"phone"`
 	Password string `json:"password"`
 	Nickname string `json:"nickname"`
-	Sex      byte   `json:"sex"`
+	Sex      int32  `json:"sex"`
 }
 
 type RegisterResp struct {
@@ -29,8 +29,8 @@ type User struct {
 	Id       string `json:"id"`
 	Phone    string `json:"phone"`
 	Nickname string `json:"nickname"`
-	Status   string `json:"status"`
-	Sex      byte   `json:"sex"`
+	Status   int32  `json:"status"`
+	Sex      int32  `json:"sex"`
 }
 
 type UserInfoReq struct {
