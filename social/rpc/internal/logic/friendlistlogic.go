@@ -7,6 +7,7 @@ import (
 	"go-zero-IM/social/dao/models"
 	"go-zero-IM/social/rpc/internal/svc"
 	"go-zero-IM/social/rpc/social"
+	_models "go-zero-IM/user/dao/models"
 
 	"github.com/zeromicro/go-zero/core/logx"
 )
@@ -27,12 +28,22 @@ func NewFriendListLogic(ctx context.Context, svcCtx *svc.ServiceContext) *Friend
 
 func (l *FriendListLogic) FriendList(in *social.FriendListReq) (*social.FriendListResp, error) {
 	friendTable := models.Friends{}.TableName()
+	userTable := _models.User{}.TableName()
 
-	friends := make([]*models.Friends, 0)
+	type friendInfo struct {
+		Id        string `json:"id"`
+		Nickname  string `json:"nickname"`
+		Remark    string `json:"remark"`
+		AddSource int    `json:"add_source"`
+	}
+
+	friends := make([]*friendInfo, 0)
 	// 获取好友列表
 	if err := l.svcCtx.DB.
 		WithContext(l.ctx).
 		Table(fmt.Sprintf("%s AS f", friendTable)).
+		Select("f.`friend_uid`, u.`nickname`, f.`remark`, f.`add_source`").
+		Joins(fmt.Sprintf("LEFT JOIN %s AS u ON u.`id` = f.`friend_uid`", userTable)).
 		Where(fmt.Sprintf("f.`user_id` = '%s'", in.UserId)).
 		Find(&friends).Error; err != nil {
 		return nil, errors.New("查询" + friendTable + "时出现问题")
@@ -42,7 +53,8 @@ func (l *FriendListLogic) FriendList(in *social.FriendListReq) (*social.FriendLi
 	result := make([]*social.Friends, 0)
 	for _, friend := range friends {
 		result = append(result, &social.Friends{
-			Id:        friend.FriendUID,
+			Id:        friend.Id,
+			Nickname:  friend.Nickname,
 			Remark:    friend.Remark,
 			AddSource: int32(friend.AddSource),
 		})
