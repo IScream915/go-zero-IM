@@ -1,21 +1,19 @@
 syntax = "v1"
 
 info (
-	title: "社交服务的实例对象"
-	author: "木兮老师"
+	title:  "社交服务api"
+	author: "ISCream915"
 )
 
 type (
 	Friends {
-		Id        int32  `json:"id,omitempty"`
-		FriendUid string `json:"friend_uid,omitempty"`
+		Id        string `json:"id,omitempty"`
 		Nickname  string `json:"nickname,omitempty"`
-		Avatar    string `json:"avatar,omitempty"`
 		Remark    string `json:"remark,omitempty"`
+		AddSource int32  `json:"add_source,omitempty"`
 	}
-
 	FriendRequests {
-		Id           int64  `json:"id,omitempty"`
+		Id           int32  `json:"id,omitempty"`
 		UserId       string `json:"user_id,omitempty"`
 		ReqUid       string `json:"req_uid,omitempty"`
 		ReqMsg       string `json:"req_msg,omitempty"`
@@ -23,7 +21,6 @@ type (
 		HandleResult int    `json:"handle_result,omitempty"`
 		HandleMsg    string `json:"handle_msg,omitempty"`
 	}
-
 	Groups {
 		Id              string `json:"id,omitempty"`
 		Name            string `json:"name,omitempty"`
@@ -34,7 +31,6 @@ type (
 		Notification    string `json:"notification,omitempty"`
 		NotificationUid string `json:"notification_uid,omitempty"`
 	}
-
 	GroupMembers {
 		Id            int64  `json:"id,omitempty"`
 		GroupId       string `json:"group_id,omitempty"`
@@ -45,7 +41,6 @@ type (
 		InviterUid    string `json:"inviter_uid,omitempty"`
 		OperatorUid   string `json:"operator_uid,omitempty"`
 	}
-
 	GroupRequests {
 		Id            int64  `json:"id,omitempty"`
 		UserId        string `json:"user_id,omitempty"`
@@ -62,11 +57,10 @@ type (
 
 type (
 	FriendPutInReq {
-		ReqMsg  string `json:"req_msg,omitempty"`
-		ReqTime int64  `json:"req_time,omitempty"`
-		UserId  string `json:"user_uid"`
+		ReqUid string `json:"req_uid"`
+		ReqMsg string `json:"req_msg,omitempty"`
 	}
-	FriendPutInResp struct{}
+	FriendPutInResp  {}
 )
 
 type (
@@ -74,18 +68,18 @@ type (
 		FriendReqId  int32 `json:"friend_req_id,omitempty"`
 		HandleResult int32 `json:"handle_result,omitempty"` // 处理结果
 	}
-	FriendPutInHandleResp struct{}
+	FriendPutInHandleResp  {}
 )
 
 type (
-	FriendPutInListReq  struct{}
+	FriendPutInListReq  {}
 	FriendPutInListResp {
 		List []*FriendRequests `json:"list"`
 	}
 )
 
 type (
-	FriendListReq  struct{}
+	FriendListReq  {}
 	FriendListResp {
 		List []*Friends `json:"list"`
 	}
@@ -96,7 +90,7 @@ type (
 		Name string `json:"name,omitempty"`
 		Icon string `json:"icon,omitempty"`
 	}
-	GroupCreateResp struct{}
+	GroupCreateResp  {}
 )
 
 type (
@@ -106,7 +100,7 @@ type (
 		ReqTime    int64  `json:"req_time,omitempty"`
 		JoinSource int64  `json:"join_source,omitempty"`
 	}
-	GroupPutInResp struct{}
+	GroupPutInResp  {}
 )
 
 type (
@@ -115,7 +109,7 @@ type (
 		GroupId      string `json:"group_id,omitempty"`
 		HandleResult int32  `json:"handle_result,omitempty"` // 处理结果
 	}
-	GroupPutInHandleResp struct{}
+	GroupPutInHandleResp  {}
 )
 
 type (
@@ -128,7 +122,7 @@ type (
 )
 
 type (
-	GroupListRep  struct{}
+	GroupListRep  {}
 	GroupListResp {
 		List []*Groups `json:"list,omitempty"`
 	}
@@ -143,56 +137,57 @@ type (
 	}
 )
 
-@server(
+@server (
 	prefix: v1/social
-	group: friend
-	jwt: JwtAuth
+	group:  friend
+	jwt:    Jwt
 )
 service social {
 	@doc "好友申请"
 	@handler friendPutIn
-	post /friend/putIn(FriendPutInReq) returns(FriendPutInResp)
-	
+	post /friend/putIn (FriendPutInReq) returns (FriendPutInResp)
+
 	@doc "好友申请处理"
 	@handler friendPutInHandle
-	put  /friend/putIn(FriendPutInHandleReq) returns(FriendPutInHandleResp)
-	
+	put /friend/putIn (FriendPutInHandleReq) returns (FriendPutInHandleResp)
+
 	@doc "好友申请列表"
 	@handler friendPutInList
-	get  /friend/putIns(FriendPutInListReq) returns(FriendPutInListResp)
-	
+	get /friend/putIns (FriendPutInListReq) returns (FriendPutInListResp)
+
 	@doc "好友列表"
 	@handler friendList
-	get  /friends(FriendListReq) returns(FriendListResp)
+	get /friends (FriendListReq) returns (FriendListResp)
 }
 
-@server(
+@server (
 	prefix: v1/social
-	group: group
-	jwt: JwtAuth
+	group:  group
+	jwt:    Jwt
 )
 service social {
 	@doc "创群"
 	@handler createGroup
-	post /group(GroupCreateReq) returns(GroupCreateResp)
-	
+	post /group (GroupCreateReq) returns (GroupCreateResp)
+
 	@doc "申请进群"
 	@handler groupPutIn
-	post  /group/putIn(GroupPutInRep) returns(GroupPutInResp)
-	
+	post /group/putIn (GroupPutInRep) returns (GroupPutInResp)
+
 	@doc "申请进群处理"
 	@handler groupPutInHandle
-	put  /group/putIn(GroupPutInHandleRep) returns(GroupPutInHandleResp)
-	
+	put /group/putIn (GroupPutInHandleRep) returns (GroupPutInHandleResp)
+
 	@doc "申请进群列表"
 	@handler groupPutInList
-	get  /group/putIns(GroupPutInListRep) returns(GroupPutInListResp)
-	
+	get /group/putIns (GroupPutInListRep) returns (GroupPutInListResp)
+
 	@doc "用户申群列表"
 	@handler groupList
-	get  /groups(GroupListRep) returns(GroupListResp)
-	
+	get /groups (GroupListRep) returns (GroupListResp)
+
 	@doc "成员列表列表"
 	@handler groupUserList
-	get  /group/users(GroupUserListReq) returns(GroupUserListResp)
+	get /group/users (GroupUserListReq) returns (GroupUserListResp)
 }
+
