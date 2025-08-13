@@ -10,7 +10,7 @@ Database:
   Host: 198.19.249.172
   Port: 3306
   User: root
-  Password: "Admin@9000"
+  Password: Admin@9000
   DatabaseName: go_zero_IM
   Charset: utf8mb4
 
