@@ -11,8 +11,8 @@ type FriendListResp struct {
 }
 
 type FriendPutInHandleReq struct {
-	FriendReqId  int32 `json:"friend_req_id,omitempty"`
-	HandleResult int32 `json:"handle_result,omitempty"` // 处理结果
+	FriendReqId  int32 `json:"friend_req_id"`
+	HandleResult int32 `json:"handle_result"` // 处理结果
 }
 
 type FriendPutInHandleResp struct {
@@ -27,7 +27,7 @@ type FriendPutInListResp struct {
 
 type FriendPutInReq struct {
 	ReqUid string `json:"req_uid"`
-	ReqMsg string `json:"req_msg,omitempty"`
+	ReqMsg string `json:"req_msg"`
 }
 
 type FriendPutInResp struct {
@@ -44,15 +44,15 @@ type FriendRequests struct {
 }
 
 type Friends struct {
-	Id        string `json:"id,omitempty"`
-	Nickname  string `json:"nickname,omitempty"`
-	Remark    string `json:"remark,omitempty"`
-	AddSource int32  `json:"add_source,omitempty"`
+	Id        string `json:"id"`
+	Nickname  string `json:"nickname"`
+	Remark    string `json:"remark"`
+	AddSource int32  `json:"add_source"`
 }
 
 type GroupCreateReq struct {
-	Name string `json:"name,omitempty"`
-	Icon string `json:"icon,omitempty"`
+	Name string `json:"name"`
+	Icon string `json:"icon"`
 }
 
 type GroupCreateResp struct {
