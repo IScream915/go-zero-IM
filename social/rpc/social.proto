@@ -60,10 +60,10 @@ message GroupRequests {
 // req resp
 
 message FriendPutInReq {
-  string userId = 2;
-  string reqUid = 3;
-  string reqMsg = 4;
-  int64  reqTime = 5;
+  string userId = 1;
+  string reqUid = 2;
+  string reqMsg = 3;
+//  int64  reqTime = 5;
 }
 message FriendPutInResp {}
 

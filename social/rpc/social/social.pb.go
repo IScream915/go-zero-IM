@@ -500,10 +500,9 @@ func (x *GroupRequests) GetHandleResult() int32 {
 
 type FriendPutInReq struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	UserId        string                 `protobuf:"bytes,2,opt,name=userId,proto3" json:"userId,omitempty"`
-	ReqUid        string                 `protobuf:"bytes,3,opt,name=reqUid,proto3" json:"reqUid,omitempty"`
-	ReqMsg        string                 `protobuf:"bytes,4,opt,name=reqMsg,proto3" json:"reqMsg,omitempty"`
-	ReqTime       int64                  `protobuf:"varint,5,opt,name=reqTime,proto3" json:"reqTime,omitempty"`
+	UserId        string                 `protobuf:"bytes,1,opt,name=userId,proto3" json:"userId,omitempty"`
+	ReqUid        string                 `protobuf:"bytes,2,opt,name=reqUid,proto3" json:"reqUid,omitempty"`
+	ReqMsg        string                 `protobuf:"bytes,3,opt,name=reqMsg,proto3" json:"reqMsg,omitempty"` //  int64  reqTime = 5;
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -557,13 +556,6 @@ func (x *FriendPutInReq) GetReqMsg() string {
 		return x.ReqMsg
 	}
 	return ""
-}
-
-func (x *FriendPutInReq) GetReqTime() int64 {
-	if x != nil {
-		return x.ReqTime
-	}
-	return 0
 }
 
 type FriendPutInResp struct {
@@ -1563,12 +1555,11 @@ const file_social_proto_rawDesc = "" +
 	"inviterUid\x18\a \x01(\tR\n" +
 	"inviterUid\x12\x1c\n" +
 	"\thandleUid\x18\b \x01(\tR\thandleUid\x12\"\n" +
-	"\fhandleResult\x18\t \x01(\x05R\fhandleResult\"r\n" +
+	"\fhandleResult\x18\t \x01(\x05R\fhandleResult\"X\n" +
 	"\x0eFriendPutInReq\x12\x16\n" +
-	"\x06userId\x18\x02 \x01(\tR\x06userId\x12\x16\n" +
-	"\x06reqUid\x18\x03 \x01(\tR\x06reqUid\x12\x16\n" +
-	"\x06reqMsg\x18\x04 \x01(\tR\x06reqMsg\x12\x18\n" +
-	"\areqTime\x18\x05 \x01(\x03R\areqTime\"\x11\n" +
+	"\x06userId\x18\x01 \x01(\tR\x06userId\x12\x16\n" +
+	"\x06reqUid\x18\x02 \x01(\tR\x06reqUid\x12\x16\n" +
+	"\x06reqMsg\x18\x03 \x01(\tR\x06reqMsg\"\x11\n" +
 	"\x0fFriendPutInResp\"t\n" +
 	"\x14FriendPutInHandleReq\x12 \n" +
 	"\vfriendReqId\x18\x01 \x01(\x05R\vfriendReqId\x12\x16\n" +
