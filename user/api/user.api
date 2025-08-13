@@ -1,32 +1,39 @@
 syntax = "v1"
 
 info (
-	title: "用户服务api"
-	desc:  "用户服务api内容"
+	title:  "用户服务api"
+	author: "IScream"
 )
 
-type (
-	UserReq {
-		Id uint64 `json:"id"`
-	}
-	UserResp {
-		Id    uint64 `json:"id"`
-		Name  string `json:"name"`
-		Phone string `json:"phone"`
-	}
+import (
+	"domain.api"
 )
 
-// 定义 user api 服务描述
-service User {
-	@handler user
-	get /user (UserReq) returns (UserResp)
+// ---------------------------- user api v1 ----------------------------
+// no need login
+@server (
+	prefix: v1/user
+	group:  user
+)
+service user {
+	@doc "用户注册"
+	@handler register
+	post /register (RegisterReq) returns (RegisterResp)
+
+	@doc "用户登录"
+	@handler login
+	post /login (LoginReq) returns (LoginResp)
 }
 
+// need login
 @server (
-	middleware: LoginVerification
+	prefix: v1/user
+	group:  user
+	jwt:    Jwt
 )
-service User {
-	@handler userInfo
-	get /userInfo (UserReq) returns (UserResp)
+service user {
+	@doc "获取用户信息"
+	@handler detail
+	get /user (UserInfoReq) returns (UserInfoResp)
 }
 
