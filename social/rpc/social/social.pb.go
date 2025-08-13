@@ -25,8 +25,9 @@ const (
 type Friends struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Id            string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
-	Remark        string                 `protobuf:"bytes,2,opt,name=remark,proto3" json:"remark,omitempty"`
-	AddSource     int32                  `protobuf:"varint,3,opt,name=addSource,proto3" json:"addSource,omitempty"` // 添加来源
+	Nickname      string                 `protobuf:"bytes,2,opt,name=nickname,proto3" json:"nickname,omitempty"`
+	Remark        string                 `protobuf:"bytes,3,opt,name=remark,proto3" json:"remark,omitempty"`
+	AddSource     int32                  `protobuf:"varint,4,opt,name=addSource,proto3" json:"addSource,omitempty"` // 添加来源
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -64,6 +65,13 @@ func (*Friends) Descriptor() ([]byte, []int) {
 func (x *Friends) GetId() string {
 	if x != nil {
 		return x.Id
+	}
+	return ""
+}
+
+func (x *Friends) GetNickname() string {
+	if x != nil {
+		return x.Nickname
 	}
 	return ""
 }
@@ -1487,11 +1495,12 @@ var File_social_proto protoreflect.FileDescriptor
 
 const file_social_proto_rawDesc = "" +
 	"\n" +
-	"\fsocial.proto\x12\x06social\"O\n" +
+	"\fsocial.proto\x12\x06social\"k\n" +
 	"\aFriends\x12\x0e\n" +
-	"\x02id\x18\x01 \x01(\tR\x02id\x12\x16\n" +
-	"\x06remark\x18\x02 \x01(\tR\x06remark\x12\x1c\n" +
-	"\taddSource\x18\x03 \x01(\x05R\taddSource\"\xa6\x01\n" +
+	"\x02id\x18\x01 \x01(\tR\x02id\x12\x1a\n" +
+	"\bnickname\x18\x02 \x01(\tR\bnickname\x12\x16\n" +
+	"\x06remark\x18\x03 \x01(\tR\x06remark\x12\x1c\n" +
+	"\taddSource\x18\x04 \x01(\x05R\taddSource\"\xa6\x01\n" +
 	"\x0eFriendRequests\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\x05R\x02id\x12\x16\n" +
 	"\x06userId\x18\x02 \x01(\tR\x06userId\x12\x16\n" +
