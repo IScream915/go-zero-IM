@@ -31,10 +31,10 @@ func (l *FriendListLogic) FriendList(in *social.FriendListReq) (*social.FriendLi
 	userTable := _models.User{}.TableName()
 
 	type friendInfo struct {
-		Id        string `json:"id"`
-		Nickname  string `json:"nickname"`
-		Remark    string `json:"remark"`
-		AddSource int    `json:"add_source"`
+		Id        string
+		Nickname  string
+		Remark    string
+		AddSource int
 	}
 
 	friends := make([]*friendInfo, 0)
@@ -42,7 +42,7 @@ func (l *FriendListLogic) FriendList(in *social.FriendListReq) (*social.FriendLi
 	if err := l.svcCtx.DB.
 		WithContext(l.ctx).
 		Table(fmt.Sprintf("%s AS f", friendTable)).
-		Select("f.`friend_uid`, u.`nickname`, f.`remark`, f.`add_source`").
+		Select("f.`friend_uid` AS `id`, u.`nickname`, f.`remark`, f.`add_source`").
 		Joins(fmt.Sprintf("LEFT JOIN %s AS u ON u.`id` = f.`friend_uid`", userTable)).
 		Where(fmt.Sprintf("f.`user_id` = '%s'", in.UserId)).
 		Find(&friends).Error; err != nil {
