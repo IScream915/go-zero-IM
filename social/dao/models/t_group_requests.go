@@ -21,5 +21,5 @@ type GroupRequests struct {
 }
 
 func (GroupRequests) TableName() string {
-	return "group_requests"
+	return "t_group_requests"
 }

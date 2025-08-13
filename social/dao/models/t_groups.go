@@ -22,5 +22,5 @@ type Groups struct {
 }
 
 func (Groups) TableName() string {
-	return "groups"
+	return "t_groups"
 }
