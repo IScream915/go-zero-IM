@@ -2,6 +2,9 @@ package user
 
 import (
 	"context"
+	"errors"
+	"user/pkg/ctxData"
+	"user/rpc/user"
 
 	"user/api/internal/svc"
 	"user/api/internal/types"
@@ -25,7 +28,26 @@ func NewDetailLogic(ctx context.Context, svcCtx *svc.ServiceContext) *DetailLogi
 }
 
 func (l *DetailLogic) Detail(req *types.UserInfoReq) (resp *types.UserInfoResp, err error) {
-	// todo: add your logic here and delete this line
+	uid, err := ctxData.GetUid(l.ctx)
+	if err != nil {
+		return nil, err
+	}
 
+	infoResp, err := l.svcCtx.User.GetUserInfo(l.ctx, &user.GetUserInfoReq{
+		Id: uid,
+	})
+	if err != nil {
+		return nil, errors.New("获取用户详情失败" + err.Error())
+	}
+
+	resp = &types.UserInfoResp{
+		Info: types.User{
+			Id:       infoResp.User.Id,
+			Phone:    infoResp.User.Phone,
+			Nickname: infoResp.User.Nickname,
+			Status:   infoResp.User.Status,
+			Sex:      infoResp.User.Sex,
+		},
+	}
 	return
 }
