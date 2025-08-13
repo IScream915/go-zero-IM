@@ -3,10 +3,11 @@ package friend
 import (
 	"net/http"
 
-	"github.com/zeromicro/go-zero/rest/httpx"
 	"go-zero-IM/social/api/internal/logic/friend"
 	"go-zero-IM/social/api/internal/svc"
 	"go-zero-IM/social/api/internal/types"
+
+	"github.com/zeromicro/go-zero/rest/httpx"
 )
 
 // 好友列表
