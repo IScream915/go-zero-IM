@@ -6,7 +6,7 @@ const Identify = "userCtx"
 
 func GetJwtToken(secretKey string, iat, expiredTime int64, uid string) (string, error) {
 	claims := make(jwt.MapClaims)
-	claims["exp"] = expiredTime
+	claims["exp"] = iat + expiredTime
 	claims["iat"] = iat
 	claims[Identify] = uid
 
