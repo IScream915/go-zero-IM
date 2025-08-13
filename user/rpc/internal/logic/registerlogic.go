@@ -3,15 +3,15 @@ package logic
 import (
 	"context"
 	"errors"
+	"go-zero-IM/pkg/ctxData"
+	"go-zero-IM/pkg/encrypt"
+	"go-zero-IM/pkg/wuid"
+	"go-zero-IM/user/dao/models"
+	"go-zero-IM/user/dao/query/implement"
 	"time"
-	"user/dao/models"
-	"user/dao/query/implement"
-	"user/pkg/ctxData"
-	"user/pkg/encrypt"
-	"user/pkg/wuid"
 
-	"user/rpc/internal/svc"
-	"user/rpc/user"
+	"go-zero-IM/user/rpc/internal/svc"
+	"go-zero-IM/user/rpc/user"
 
 	"github.com/zeromicro/go-zero/core/logx"
 )

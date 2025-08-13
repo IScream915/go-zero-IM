@@ -1,7 +1,7 @@
 package implement
 
 import (
-	_interface "user/dao/query/interface"
+	_interface "go-zero-IM/user/dao/query/interface"
 
 	"gorm.io/gorm"
 )

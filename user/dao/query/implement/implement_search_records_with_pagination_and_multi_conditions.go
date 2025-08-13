@@ -8,7 +8,7 @@ import (
 	"strings"
 	"time"
 
-	_interface "user/dao/query/interface"
+	_interface "go-zero-IM/user/dao/query/interface"
 
 	"gorm.io/gorm"
 	"gorm.io/gorm/clause"

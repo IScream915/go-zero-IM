@@ -2,10 +2,10 @@ package user
 
 import (
 	"context"
-	"user/rpc/user"
+	"go-zero-IM/user/rpc/user"
 
-	"user/api/internal/svc"
-	"user/api/internal/types"
+	"go-zero-IM/user/api/internal/svc"
+	"go-zero-IM/user/api/internal/types"
 
 	"github.com/zeromicro/go-zero/core/logx"
 )

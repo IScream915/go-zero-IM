@@ -2,8 +2,8 @@ package svc
 
 import (
 	"fmt"
+	"go-zero-IM/user/rpc/internal/config"
 	"log"
-	"user/rpc/internal/config"
 
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"

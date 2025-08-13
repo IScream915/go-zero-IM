@@ -3,11 +3,11 @@ package logic
 import (
 	"context"
 	"errors"
-	"user/dao/models"
-	"user/dao/query/implement"
+	"go-zero-IM/user/dao/models"
+	"go-zero-IM/user/dao/query/implement"
 
-	"user/rpc/internal/svc"
-	"user/rpc/user"
+	"go-zero-IM/user/rpc/internal/svc"
+	"go-zero-IM/user/rpc/user"
 
 	"github.com/zeromicro/go-zero/core/logx"
 )

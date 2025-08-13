@@ -4,10 +4,10 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"go-zero-IM/user/dao/models"
+	"go-zero-IM/user/rpc/internal/svc"
+	"go-zero-IM/user/rpc/user"
 	"strings"
-	"user/dao/models"
-	"user/rpc/internal/svc"
-	"user/rpc/user"
 
 	"github.com/zeromicro/go-zero/core/logx"
 )

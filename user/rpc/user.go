@@ -3,13 +3,13 @@ package main
 import (
 	"flag"
 	"fmt"
+	"go-zero-IM/user/dao/models"
 	"log"
-	"user/dao/models"
 
-	"user/rpc/internal/config"
-	"user/rpc/internal/server"
-	"user/rpc/internal/svc"
-	"user/rpc/user"
+	"go-zero-IM/user/rpc/internal/config"
+	"go-zero-IM/user/rpc/internal/server"
+	"go-zero-IM/user/rpc/internal/svc"
+	"go-zero-IM/user/rpc/user"
 
 	"github.com/zeromicro/go-zero/core/conf"
 	"github.com/zeromicro/go-zero/core/service"
@@ -18,7 +18,7 @@ import (
 	"google.golang.org/grpc/reflection"
 )
 
-var configFile = flag.String("f", "rpc/etc/user.yaml", "the config file")
+var configFile = flag.String("f", "user/rpc/etc/user.yaml", "the config file")
 
 func main() {
 	flag.Parse()

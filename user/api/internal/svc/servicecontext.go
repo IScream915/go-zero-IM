@@ -1,8 +1,8 @@
 package svc
 
 import (
-	"user/api/internal/config"
-	"user/rpc/userclient"
+	"go-zero-IM/user/api/internal/config"
+	"go-zero-IM/user/rpc/userclient"
 
 	"github.com/zeromicro/go-zero/zrpc"
 )

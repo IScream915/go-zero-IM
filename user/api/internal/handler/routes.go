@@ -6,8 +6,8 @@ package handler
 import (
 	"net/http"
 
-	user "user/api/internal/handler/user"
-	"user/api/internal/svc"
+	user "go-zero-IM/user/api/internal/handler/user"
+	"go-zero-IM/user/api/internal/svc"
 
 	"github.com/zeromicro/go-zero/rest"
 )

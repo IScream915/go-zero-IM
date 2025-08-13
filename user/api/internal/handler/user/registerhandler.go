@@ -3,10 +3,11 @@ package user
 import (
 	"net/http"
 
+	"go-zero-IM/user/api/internal/logic/user"
+	"go-zero-IM/user/api/internal/svc"
+	"go-zero-IM/user/api/internal/types"
+
 	"github.com/zeromicro/go-zero/rest/httpx"
-	"user/api/internal/logic/user"
-	"user/api/internal/svc"
-	"user/api/internal/types"
 )
 
 // 用户注册
