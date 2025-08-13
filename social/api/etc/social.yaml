@@ -1,0 +1,12 @@
+Name: social
+Host: 0.0.0.0
+Port: 8889
+
+SocialRpc:
+  Etcd:
+    Hosts:
+      - 198.19.249.172:2379
+    Key: social.rpc
+
+Jwt:
+  AccessSecret: imooc.com
