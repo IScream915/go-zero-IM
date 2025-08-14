@@ -13,6 +13,7 @@ import (
 
 type Server struct {
 	addr     string
+	pattern  string
 	upgrader *websocket.Upgrader
 	logx.Logger
 
@@ -30,9 +31,12 @@ type Server struct {
 	authentication Authentication
 }
 
-func NewServer(addr string) *Server {
+func NewServer(addr string, options ...ServerOptions) *Server {
+	opt := newServerOptions(options...)
+
 	return &Server{
 		addr:     addr,
+		pattern:  opt.pattern,
 		upgrader: &websocket.Upgrader{},
 		Logger:   logx.WithContext(context.Background()),
 
@@ -41,7 +45,7 @@ func NewServer(addr string) *Server {
 		connToUser: make(map[*websocket.Conn]string),
 		userToConn: make(map[string]*websocket.Conn),
 
-		authentication: new(authentication),
+		authentication: opt.Authentication,
 	}
 }
 
@@ -58,6 +62,17 @@ func (s *Server) ServerWs(w http.ResponseWriter, r *http.Request) {
 		s.Errorf("upgrader ws err %v", err)
 		return
 	}
+
+	// 对连接进行鉴权
+	if !s.authentication.Auth(w, r) {
+		conn.WriteMessage(websocket.TextMessage, []byte(fmt.Sprint("不具备访问权限")))
+		//s.Send(&Message{FrameType: FrameData, Data: fmt.Sprint("不具备访问权限")}, conn)
+		//conn.Close()
+		return
+	}
+
+	// 记录连接
+	s.addConn(conn, r)
 
 	// 根据连接对象执行任务处理
 	go s.handelConn(conn)
@@ -76,14 +91,14 @@ func (s *Server) handelConn(conn *websocket.Conn) {
 		_, msg, err := conn.ReadMessage()
 		if err != nil {
 			s.Errorf("websocket conn message read err %v", err)
-			// todo: 关闭连接
+			s.Close(conn)
 			return
 		}
 
 		var message Message
 		if err = json.Unmarshal(msg, &message); err != nil {
 			s.Errorf("json message unmarshal err %v, msg %v", err, string(msg))
-			// todo: 关闭连接
+			s.Close(conn)
 			return
 		}
 
@@ -178,8 +193,35 @@ func (s *Server) GetUsers(conns ...*websocket.Conn) []string {
 	return res
 }
 
+func (s *Server) SendByUserId(msg interface{}, sendIds ...string) error {
+	if len(sendIds) == 0 {
+		return nil
+	}
+
+	return s.Send(msg, s.GetConns(sendIds...)...)
+}
+
+func (s *Server) Send(msg interface{}, conns ...*websocket.Conn) error {
+	if len(conns) == 0 {
+		return nil
+	}
+
+	data, err := json.Marshal(msg)
+	if err != nil {
+		return err
+	}
+
+	for _, conn := range conns {
+		if err := conn.WriteMessage(websocket.TextMessage, data); err != nil {
+			return err
+		}
+	}
+
+	return nil
+}
+
 func (s *Server) Start() {
-	http.HandleFunc("/ws", s.ServerWs)
+	http.HandleFunc(s.pattern, s.ServerWs)
 	fmt.Println("websocket已启动, 正在监听...")
 	s.Info(http.ListenAndServe(s.addr, nil))
 }
