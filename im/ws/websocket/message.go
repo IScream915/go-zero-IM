@@ -2,6 +2,6 @@ package websocket
 
 type Message struct {
 	Method string      `json:"method,omitempty"`
-	FormId string      `json:"formId,omitempty"`
+	FromId string      `json:"fromId,omitempty"`
 	Data   interface{} `json:"data,omitempty"`
 }
