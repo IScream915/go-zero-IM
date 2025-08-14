@@ -2,6 +2,8 @@ package friend
 
 import (
 	"context"
+	"go-zero-IM/pkg/ctxData"
+	"go-zero-IM/social/rpc/social"
 
 	"go-zero-IM/social/api/internal/svc"
 	"go-zero-IM/social/api/internal/types"
@@ -25,7 +27,19 @@ func NewFriendPutInHandleLogic(ctx context.Context, svcCtx *svc.ServiceContext) 
 }
 
 func (l *FriendPutInHandleLogic) FriendPutInHandle(req *types.FriendPutInHandleReq) (resp *types.FriendPutInHandleResp, err error) {
-	// todo: add your logic here and delete this line
+	// 从ctx中获取id
+	id, err := ctxData.GetUid(l.ctx)
+	if err != nil {
+		return nil, err
+	}
+
+	if _, err = l.svcCtx.Social.FriendPutInHandle(l.ctx, &social.FriendPutInHandleReq{
+		FriendReqId:  req.FriendReqId,
+		UserId:       id,
+		HandleResult: req.HandleResult,
+	}); err != nil {
+		return nil, err
+	}
 
 	return
 }
