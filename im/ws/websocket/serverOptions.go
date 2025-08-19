@@ -1,26 +1,20 @@
 package websocket
 
-import (
-	"math"
-	"time"
-)
-
-const (
-	defaultMaxConnectionIdle = time.Duration(math.MaxInt64)
-	defaultAckTimeout        = 30 * time.Second
-)
+import "time"
 
 type ServerOptions func(opt *serverOption)
 
 type serverOption struct {
 	Authentication
-	pattern string
+	pattern           string
+	maxConnectionIdle time.Duration
 }
 
 func newServerOptions(opts ...ServerOptions) serverOption {
 	o := serverOption{
-		Authentication: new(authentication),
-		pattern:        "/ws",
+		Authentication:    new(authentication),
+		pattern:           "/ws",
+		maxConnectionIdle: defaultMaxConnectionIdle,
 	}
 
 	for _, opt := range opts {
@@ -38,5 +32,13 @@ func WithServerAuthentication(auth Authentication) ServerOptions {
 func WithServerPatten(patten string) ServerOptions {
 	return func(opt *serverOption) {
 		opt.pattern = patten
+	}
+}
+
+func WithServerMaxConnectionIdle(maxConnectionIdle time.Duration) ServerOptions {
+	return func(opt *serverOption) {
+		if maxConnectionIdle > 0 {
+			opt.maxConnectionIdle = maxConnectionIdle
+		}
 	}
 }
