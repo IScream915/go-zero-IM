@@ -7,6 +7,7 @@ import (
 	"go-zero-IM/im/ws/internal/handler"
 	"go-zero-IM/im/ws/internal/svc"
 	"go-zero-IM/im/ws/websocket"
+	"time"
 
 	"github.com/zeromicro/go-zero/core/conf"
 )
@@ -23,12 +24,15 @@ func main() {
 		panic(err)
 	}
 
-	srv := websocket.NewServer(c.ListenOn) //websocket.WithServerAuthentication(handler.NewJwtAuth(ctx)),
+	ctx := svc.NewServiceContext(c)
+	srv := websocket.NewServer(c.ListenOn,
+		websocket.WithServerAuthentication(handler.NewJwt(ctx)),
+		websocket.WithServerMaxConnectionIdle(10*time.Second),
+	)
 	//websocket.WithServerAck(websocket.RigorAck),
-	//websocket.WithServerMaxConnectionIdle(10*time.Second),
+
 	defer srv.Stop()
 
-	ctx := svc.NewServiceContext(c)
 	handler.RegisterHandlers(srv, ctx)
 
 	fmt.Println("start websocket server at ", c.ListenOn, " ..... ")
