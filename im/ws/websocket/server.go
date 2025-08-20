@@ -96,6 +96,10 @@ func (s *Server) AddRoutes(rs ...Route) {
 
 // handelConn 根据连接对象执行任务处理
 func (s *Server) handelConn(conn *Conn) {
+
+	uids := s.GetUsers(conn)
+	conn.Uid = uids[0]
+
 	for {
 		// 获取请求消息
 		_, msg, err := conn.ReadMessage()
