@@ -11,13 +11,15 @@ type Config struct {
 		AccessSecret string
 	}
 
-	//Mongo struct {
-	//	Url string
-	//	Db  string
-	//}
-	//
+	Mongo MongoConfig
+
 	//MsgChatTransfer struct {
 	//	Topic string
 	//	Addrs []string
 	//}
+}
+
+type MongoConfig struct {
+	Url string
+	Db  string
 }

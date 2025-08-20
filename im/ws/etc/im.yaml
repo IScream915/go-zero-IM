@@ -3,3 +3,7 @@ ListenOn: 0.0.0.0:11111
 
 Jwt:
   AccessSecret: imooc.com
+
+Mongo:
+  Url: "mongodb://root:Admin%409000@localhost:27017"
+  Db: easy-chat
