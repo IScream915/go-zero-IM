@@ -3,6 +3,7 @@ package svc
 import (
 	"context"
 	"go-zero-IM/im/ws/internal/config"
+	"go-zero-IM/task/mq/mqclient"
 	"log"
 	"time"
 
@@ -15,16 +16,16 @@ type ServiceContext struct {
 	MongoDB *mongo.Database
 
 	//immodels.ChatLogModel
-	//mqclient.MsgChatTransferClient
+	mqclient.MsgChatTransferClient
 }
 
 func NewServiceContext(c config.Config) *ServiceContext {
 	mongodb := initMongoDB(c.Mongo)
 
 	return &ServiceContext{
-		Config:  c,
-		MongoDB: mongodb,
-		//MsgChatTransferClient: mqclient.NewMsgChatTransferClient(c.MsgChatTransfer.Addrs, c.MsgChatTransfer.Topic),
+		Config:                c,
+		MongoDB:               mongodb,
+		MsgChatTransferClient: mqclient.NewMsgChatTransferClient(c.MsgChatTransfer.Addrs, c.MsgChatTransfer.Topic),
 		//ChatLogModel:          immodels.MustChatLogModel(c.Mongo.Url, c.Mongo.Db),
 	}
 }
