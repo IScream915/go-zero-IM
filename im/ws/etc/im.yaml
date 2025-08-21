@@ -7,3 +7,8 @@ Jwt:
 Mongo:
   Url: "mongodb://root:Admin%409000@localhost:27017"
   Db: easy-chat
+
+MsgChatTransfer:
+  Topic: msgChatTransfer
+  Addrs:
+    - 198.19.249.172:9092

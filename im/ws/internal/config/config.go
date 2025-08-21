@@ -13,10 +13,10 @@ type Config struct {
 
 	Mongo MongoConfig
 
-	//MsgChatTransfer struct {
-	//	Topic string
-	//	Addrs []string
-	//}
+	MsgChatTransfer struct {
+		Topic string
+		Addrs []string
+	}
 }
 
 type MongoConfig struct {
