@@ -2,7 +2,12 @@ package ctxData
 
 import "github.com/golang-jwt/jwt/v4"
 
-const Identify = "userCtx"
+const (
+	Identify = "userCtx"
+	// REDIS_SYSTEM_ROOT_TOKEN 系统级Token
+	REDIS_SYSTEM_ROOT_TOKEN = "system:root:token"
+	SYSTEM_ROOT_UID         = "root"
+)
 
 func GetJwtToken(secretKey string, iat, expiredTime int64, uid string) (string, error) {
 	claims := make(jwt.MapClaims)
