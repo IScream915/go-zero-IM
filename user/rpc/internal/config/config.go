@@ -5,6 +5,7 @@ import "github.com/zeromicro/go-zero/zrpc"
 type Config struct {
 	zrpc.RpcServerConf
 	Database DatabaseConfig
+	Rds      RedisConfig
 	Jwt      JwtConfig
 }
 
@@ -20,4 +21,11 @@ type DatabaseConfig struct {
 type JwtConfig struct {
 	AccessSecret string
 	AccessExpire int64
+}
+
+type RedisConfig struct {
+	Host     string
+	Port     int
+	Password string
+	DB       int
 }
